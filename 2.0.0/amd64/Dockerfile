@@ -7,18 +7,20 @@
 # ------------------------------------------------------------------------------
 #
 
-FROM multiarch/debian-debootstrap:amd64-jessie
+#FROM multiarch/debian-debootstrap:amd64-jessie
+FROM openjdk:8
 
 # Set download urls
 ENV OPENHAB_URL="https://bintray.com/openhab/mvn/download_file?file_path=org%2Fopenhab%2Fdistro%2Fopenhab%2F2.0.0%2Fopenhab-2.0.0.zip"
-ENV JAVA_URL="https://www.azul.com/downloads/zulu/zdk-8-ga-linux_x64.tar.gz"
+#ENV JAVA_URL="https://www.azul.com/downloads/zulu/zdk-8-ga-linux_x64.tar.gz"
 
 # Set variables
 ENV \
     APPDIR="/openhab" \
     DEBIAN_FRONTEND=noninteractive \
     EXTRA_JAVA_OPTS="" \
-    JAVA_HOME='/usr/lib/java-8' \
+    JAVA_HOME='/usr/lib/jvm/java-8-openjdk-amd64' \ 
+	#'/usr/lib/java-8' \
     OPENHAB_HTTP_PORT="8080" \
     OPENHAB_HTTPS_PORT="8443" \
     USER_ID="9001"
@@ -54,11 +56,11 @@ ENV \
     LANGUAGE=en_US.UTF-8
 
 # Install java
-RUN wget -nv -O /tmp/java.tar.gz ${JAVA_URL} &&\
-    mkdir ${JAVA_HOME} && \
-    tar -xvf /tmp/java.tar.gz --strip-components=1 -C ${JAVA_HOME} && \
-    update-alternatives --install /usr/bin/java java ${JAVA_HOME}/bin/java 50 && \
-    update-alternatives --install /usr/bin/javac javac ${JAVA_HOME}/bin/javac 50
+#RUN wget -nv -O /tmp/java.tar.gz ${JAVA_URL} &&\
+#    mkdir ${JAVA_HOME} && \
+#    tar -xvf /tmp/java.tar.gz --strip-components=1 -C ${JAVA_HOME} && \
+#    update-alternatives --install /usr/bin/java java ${JAVA_HOME}/bin/java 50 && \
+#    update-alternatives --install /usr/bin/javac javac ${JAVA_HOME}/bin/javac 50
 
 # Add openhab user & handle possible device groups for different host systems
 # Container base image puts dialout on group id 20, uucp on id 10
